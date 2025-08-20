@@ -10,6 +10,7 @@
       font-family: Arial, sans-serif;
       margin: 20px;
       text-align: center;
+	        background-color: #8181F3;
     }
   .grid {
     display: grid;
@@ -143,12 +144,12 @@
 <script>
   const grid = document.getElementById("grid");
   const coordsInput = document.getElementById("coords");
-  const size = 20;
+  const size = 19;
   const selected = []; // hier slaan we "x,y,type" in op
 
   // grid maken
-  for (let y = 1; y <= size; y++) {
-    for (let x = 1; x <= size; x++) {
+  for (let y = 0; y <= size; y++) {
+    for (let x = 0; x <= size; x++) {
       const cell = document.createElement("div");
       cell.classList.add("cell");
       cell.dataset.x = x;
@@ -162,8 +163,8 @@
         
         if (type === "empty") {
           // leegmaken
-          if (existingIndex !== -1) {
-            selected.splice(existingIndex, 1);
+          if (existingIndex !== -0) {
+            selected.splice(existingIndex, 0);
           }
           cell.className = "cell";
         } else {
