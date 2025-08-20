@@ -85,18 +85,15 @@
     resize: vertical;
   }
 </style></head><body>
+<div style="text-align: right;">
 
-  <h2>Scenario Creator</h2>
+  </div>
+<h2>Scenario Creator</h2>
 
   <!-- Één formulier dat alles bevat: toolbar + grid + extra velden -->
   <form action="https://formspree.io/f/xanbgjbg" method="post">
-  <div style="text-align: left;">
-    </div>
-<div class="toolbar">
-  <div style="text-align: left;">
-      </div>
-<div class="left">
-  <div style="text-align: left;">
+    <div class="toolbar">
+      <div class="left">
         <label for="structureType">Structure type:</label> 
         
   <select id="structureType">
@@ -116,10 +113,6 @@
           <option value="finish_g">Finish_Groen</option>  	
           <option value="finish_r">Finish_Rood</option>    
           <option value="empty">Leegmaken</option>
-  </select>
-  </div>
-  <select id="structureType">
-
         
   </select>
 
@@ -128,9 +121,9 @@
       
   <div style="text-align: right;"><!-- Verborgen input om selectie op te slaan + submitknop -->
       <input name="coords" id="coords" type="hidden">
-      <button type="submit">Verstuur selectie</button>
+      <button type="submit">Verstuur selectie</button></div>
+
     </div>
-</div>
 
     <div class="grid" id="grid"></div>
 
