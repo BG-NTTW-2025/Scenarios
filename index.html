@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NTTW Grid Prototype</title>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      text-align: center;
+    }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(20, 25px);
+    grid-template-rows: repeat(20, 25px);
+    gap: 1px;
+    margin: 20px auto;
+    width: fit-content;
+  }
+  .cell {
+    width: 25px;
+    height: 25px;
+    background: #eee;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-size: cover;      /* zodat het PNG’tje past */
+    background-position: center; /* mooi gecentreerd */
+  }
+
+  /* Plaatjes koppelen aan classes */
+   .water { background-image: url('water.png'); }
+   .terp { background-image: url('terp.png'); }   
+   .polder { background-image: url('polder.png'); }   
+   .gemaal { background-image: url('gemaal.png'); }   
+   .brug { background-image: url('brug.png'); }   
+   .boot { background-image: url('boot.png'); }   
+  .start_y { background-image: url('start_y.png'); }
+  .start_b { background-image: url('start_b.png'); }
+   .start_g { background-image: url('start_g.png'); }
+	.start_r { background-image: url('start_r.png'); }
+	.finish_y { background-image: url('finish_y.png'); }	
+	.finish_b { background-image: url('finish_b.png'); }
+	.finish_g { background-image: url('finish_g.png'); }
+	.finish_r { background-image: url('finish_r.png'); }
+
+  /* Toolbar: select en button naast elkaar */
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 520px;
+    margin: 0 auto 10px auto;
+    gap: 12px;
+  }
+  .toolbar .left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Info-sectie onder het grid */
+  .meta {
+    max-width: 520px;
+    margin: 12px auto 0 auto;
+    text-align: left;
+  }
+  .meta label {
+    display: block;
+    font-weight: bold;
+    margin: 8px 0 4px;
+  }
+  .meta input[type="text"],
+  .meta input[type="email"],
+  .meta textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  .meta textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+</style>
+</head>
+<body>
+
+  <h2>Scenario Creator</h2>
+
+  <!-- Één formulier dat alles bevat: toolbar + grid + extra velden -->
+  <form action="https://formspree.io/f/xanbgjbg" method="POST">
+    <div class="toolbar">
+      <div class="left">
+        <label for="structureType">Structure type:</label> 
+        <select id="structureType">
+          <option value="water">Water</option>
+          <option value="terp">Terp</option>  
+          <option value="polder">Polder</option>  
+          <option value="gemaal">Gemaal</option> 
+          <option value="boot">Boot</option>   
+          <option value="brug">Brug</option>  
+          <option value="start_y">Start-Geel</option>
+          <option value="start_b">Start_Blauw</option>
+          <option value="start_g">Start-Groen</option>
+          <option value="start_r">Start_Rood</option>
+          <option value="finish_y">Finish_Geel</option>  
+          <option value="finish_b">Finish_Blauw</option>  
+          <option value="finish_g">Finish_Groen</option>  	
+          <option value="finish_r">Finish_Rood</option>    
+          <option value="empty">Leegmaken</option>
+        </select>
+      </div>
+
+      <!-- Verborgen input om selectie op te slaan + submitknop -->
+      <input type="hidden" name="coords" id="coords">
+      <button type="submit">Verstuur selectie</button>
+    </div>
+
+    <div class="grid" id="grid"></div>
+
+    <!-- Extra info-velden onder het grid -->
+    <div class="meta">
+      <label for="designName">Naam van het ontwerp</label>
+      <input type="text" id="designName" name="design_name" placeholder="Bijv. Overstroming Zuid (v2)" required>
+
+      <label for="instructions">Instructies / toelichting</label>
+      <textarea id="instructions" name="instructions" placeholder="Beschrijf het doel, setup, speciale regels, etc."></textarea>
+
+      <label for="contact">Contactgegevens</label>
+      <input type="text" id="contact" name="contact" placeholder="E-mail of andere contactinfo (optioneel)">
+    </div>
+  </form>
+
+<script>
+  const grid = document.getElementById("grid");
+  const coordsInput = document.getElementById("coords");
+  const size = 20;
+  const selected = []; // hier slaan we "x,y,type" in op
+
+  // grid maken
+  for (let y = 1; y <= size; y++) {
+    for (let x = 1; x <= size; x++) {
+      const cell = document.createElement("div");
+      cell.classList.add("cell");
+      cell.dataset.x = x;
+      cell.dataset.y = y;
+
+      cell.addEventListener("click", () => {
+        const type = document.getElementById("structureType").value;
+        const coord = `${x},${y},${type}`;
+
+        const existingIndex = selected.findIndex(s => s.startsWith(`${x},${y},`));
+        
+        if (type === "empty") {
+          // leegmaken
+          if (existingIndex !== -1) {
+            selected.splice(existingIndex, 1);
+          }
+          cell.className = "cell";
+        } else {
+          if (existingIndex !== -1) {
+            selected[existingIndex] = coord;
+          } else {
+            selected.push(coord);
+          }
+          cell.className = "cell " + type;
+        }
+
+        coordsInput.value = selected.join(";");
+      });
+
+      grid.appendChild(cell);
+    }
+  }
+</script>
+
+</body>
+</html>
