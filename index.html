@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="nl">
-<head>
+<html lang="nl"><head>
+
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NTTW Grid Prototype</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>NTTW Grid Prototype</title>
+
 <style>
     body {
       font-family: Arial, sans-serif;
@@ -83,18 +84,23 @@
     min-height: 100px;
     resize: vertical;
   }
-</style>
-</head>
-<body>
+</style></head><body>
 
   <h2>Scenario Creator</h2>
 
   <!-- Één formulier dat alles bevat: toolbar + grid + extra velden -->
-  <form action="https://formspree.io/f/xanbgjbg" method="POST">
-    <div class="toolbar">
-      <div class="left">
+  <form action="https://formspree.io/f/xanbgjbg" method="post">
+  <div style="text-align: left;">
+    </div>
+<div class="toolbar">
+  <div style="text-align: left;">
+      </div>
+<div class="left">
+  <div style="text-align: left;">
         <label for="structureType">Structure type:</label> 
-        <select id="structureType">
+        
+  <select id="structureType">
+
           <option value="water">Water</option>
           <option value="terp">Terp</option>  
           <option value="polder">Polder</option>  
@@ -110,26 +116,34 @@
           <option value="finish_g">Finish_Groen</option>  	
           <option value="finish_r">Finish_Rood</option>    
           <option value="empty">Leegmaken</option>
-        </select>
+  </select>
+  </div>
+  <select id="structureType">
+
+        
+  </select>
+
       </div>
 
-      <!-- Verborgen input om selectie op te slaan + submitknop -->
-      <input type="hidden" name="coords" id="coords">
+      
+  <div style="text-align: right;"><!-- Verborgen input om selectie op te slaan + submitknop -->
+      <input name="coords" id="coords" type="hidden">
       <button type="submit">Verstuur selectie</button>
     </div>
+</div>
 
     <div class="grid" id="grid"></div>
 
     <!-- Extra info-velden onder het grid -->
     <div class="meta">
       <label for="designName">Naam van het ontwerp</label>
-      <input type="text" id="designName" name="design_name" placeholder="Bijv. Overstroming Zuid (v2)" required>
+      <input id="designName" name="design_name" placeholder="Bijv. Overstroming Zuid (v2)" required="" type="text">
 
       <label for="instructions">Instructies / toelichting</label>
       <textarea id="instructions" name="instructions" placeholder="Beschrijf het doel, setup, speciale regels, etc."></textarea>
 
       <label for="contact">Contactgegevens</label>
-      <input type="text" id="contact" name="contact" placeholder="E-mail of andere contactinfo (optioneel)">
+      <input id="contact" name="contact" placeholder="E-mail of andere contactinfo (optioneel)" type="text">
     </div>
   </form>
 
@@ -176,5 +190,4 @@
   }
 </script>
 
-</body>
-</html>
+</body></html>
